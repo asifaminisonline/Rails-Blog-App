@@ -2,16 +2,12 @@
 
 one:
   Name: MyString
+  Age: 1
+  Date: 2023-03-29 16:17:20
   Photo: MyString
-  Bio: MyString
-  UpdatedAt: 2023-03-29
-  CreatedAt: 2023-03-29
-  PostsCounter: 1
 
 two:
   Name: MyString
+  Age: 1
+  Date: 2023-03-29 16:17:20
   Photo: MyString
-  Bio: MyString
-  UpdatedAt: 2023-03-29
-  CreatedAt: 2023-03-29
-  PostsCounter: 1
