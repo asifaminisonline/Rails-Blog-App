@@ -1,40 +1,65 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  describe 'Validations' do
-    first_user = User.create(name: 'Prantosh', photo: 'https://avatars.githubusercontent.com/u/93311467?v=4', bio: 'Full-Stack Developer', posts_counter: 1)
-    first_post = Post.create(title: 'First Post', text: 'This is my first post', author_id: first_user.id, comments_counter: 0, likes_counter: 0)
+  before do
+    @user = User.create(name: 'John Doe', photo: 'photo url', bio: 'Awesome bio', posts_counter: 0)
+    @post = Post.create(Title: 'Awesome Title', Text: 'Post body', author: @user, CommentsCounter: 0, LikesCounter: 0)
+  end
 
-    it 'is not valid without a title' do
-      first_post.title = nil
-      expect(first_post).to_not be_valid
+  describe 'validations' do
+    it 'should require a Title' do
+      post = Post.new(Text: 'Post body', author: @user)
+      expect(post.valid?).to eq(false)
+      expect(post.errors[:Title].any?).to eq(true)
     end
 
-    it 'is not valid if the title is more than 250 characters' do
-      first_post = Post.create(
-        title: 'This is a very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very looooooooooooooooooooooooooooooooong title', text: 'This is my first post', author_id: first_user.id, likes_counter: 'one'
-      )
-      expect(first_post).to_not be_valid
+    it 'should require a non-empty Title' do
+      post = Post.new(Title: '', Text: 'Post body', author: @user)
+      expect(post.valid?).to eq(false)
+      expect(post.errors[:Title].any?).to eq(true)
     end
 
-    it 'likes_counter should be greater than or equal to 0' do
-      subject.likes_counter = -1
-      expect(subject).to_not be_valid
+    it 'should allow valid attributes' do
+      post = Post.new(Title: 'My post', Text: 'Post body', author: @user, CommentsCounter: 0, LikesCounter: 0)
+      expect(post.valid?).to eq(true)
     end
 
-    it 'likes_counter should be an integer' do
-      subject.likes_counter = 1.5
-      expect(subject).to_not be_valid
+    it 'should validate the CommentsCounter attribute' do
+      post = Post.new(Title: 'My post', Text: 'Post body', author: @user, CommentsCounter: -1, LikesCounter: 0)
+      expect(post.valid?).to eq(false)
+      expect(post.errors[:CommentsCounter].any?).to eq(true)
     end
 
-    it 'comments_counter should be greater than or equal to 0' do
-      subject.comments_counter = -1
-      expect(subject).to_not be_valid
+    it 'should validate the LikesCounter attribute' do
+      post = Post.new(Title: 'My post', Text: 'Post body', author: @user, CommentsCounter: 0, LikesCounter: -1)
+      expect(post.valid?).to eq(false)
+      expect(post.errors[:LikesCounter].any?).to eq(true)
     end
 
-    it 'comments_counter should be an integer' do
-      subject.comments_counter = 1.5
-      expect(subject).to_not be_valid
+    it 'does not allow title to exceed maximum length' do
+      post = Post.new(Title: 'a' * 251, Text: 'Post body', author: @user, CommentsCounter: 0, LikesCounter: 0)
+      expect(post).not_to be_valid
+      expect(post.errors[:Title]).to include('is too long (maximum is 250 characters)')
+    end
+  end
+
+  describe 'recent_comments' do
+    let(:post) { @post }
+    let!(:comment1) { Comment.create(author: @user, post:) }
+    let!(:comment2) { Comment.create(author: @user, post:) }
+    let!(:comment3) { Comment.create(author: @user, post:) }
+    let!(:comment4) { Comment.create(author: @user, post:) }
+    let!(:comment5) { Comment.create(author: @user, post:) }
+    let!(:comment6) { Comment.create(author: @user, post:) }
+
+    it 'should return the specified number of comments' do
+      comment1
+      comment2
+      comment3
+      comment4
+      comment5
+      comment6
+      expect(post.recent_comments(5).count).to eq(5)
     end
   end
 end
