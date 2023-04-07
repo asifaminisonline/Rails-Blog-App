@@ -68,6 +68,7 @@ m = Module.new do
       env_var_version ||
       cli_arg_version ||
       bundler_requirement_for(lockfile_version)
+
   end
 
   def bundler_requirement_for(version)
@@ -76,6 +77,7 @@ m = Module.new do
     bundler_gem_version = Gem::Version.new(version)
 
     bundler_gem_version.approximate_recommendation
+
   end
 
   def load_bundler!

@@ -36,6 +36,7 @@ development:
   # The password associated with the postgres role (username).
   #password:
 
+
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
   # domain sockets, so uncomment these lines.
@@ -59,7 +60,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: rails_blog_test
+  database: Project_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -83,6 +84,6 @@ test:
 #
 production:
   <<: *default
-  database: rails_blog_production
-  username: rails_blog
-  password: <%= ENV["RAILS_BLOG_DATABASE_PASSWORD"] %>
+  database: Project_production
+  username: Project
+  password: <%= ENV["PROJECT_DATABASE_PASSWORD"] %>
