@@ -1,23 +1,34 @@
 require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
-  before do
-    @user = User.create(name: 'John Doe', photo: 'photo url', bio: 'Awesome bio', posts_counter: 0)
-    @post = Post.create(Title: 'Awesome Post', Text: 'Post body', author: @user, CommentsCounter: 0, LikesCounter: 0)
-  end
+  describe 'Validations' do
+    first_user = User.create(name: 'Tom', photo: 'https://unsplash.com/phot
+        os/F_-0BxGuVvo', bio: 'Full-Stack Developer', posts_counter: 0)
+    first_post = Post.create(title: 'First Post', text: 'This is my first post', author_id: first_user.id,
+                             comments_counter: 0, likes_counter: 0)
+    first_comment = Comment.create(text: 'This is my first comment', author_id: first_user.id, post_id: first_post.id)
 
-  describe 'update_post_comments_counter' do
-    it 'should update the CommentsCounter attribute of the associated post' do
-      expect(@post.CommentsCounter).to eq(0)
-      Comment.create(author: @user, post: @post)
-      expect(@post.CommentsCounter).to eq(1)
-      Comment.create(author: @user, post: @post)
-      expect(@post.CommentsCounter).to eq(2)
+    first_comment.save
+
+    it 'is not valid without a text' do
+      first_comment.text = nil
+      expect(first_comment).to_not be_valid
+    end
+
+    it 'posts comments count should be 0' do
+      expect(first_post.comments_counter).to eq 0
     end
   end
-
-  it 'have correct user' do
-    @comment = Comment.create(post: @post, author: @user)
-    expect(@comment.author_id).to eq(@user.id)
+  describe '#update_comments_counter' do
+    it 'should update the posts comments counter' do
+      first_user = User.create(name: 'Tom', photo: 'https://unsplash.com/photos/F_-0BxGuVvo',
+                               bio: 'Full-Stack Developer', posts_counter: 0)
+      # rubocop:disable Lint/UselessAssignment
+      first_post = Post.create(title: 'First Post', text: 'This is my first post', author: first_user,
+                               comments_counter: 0, likes_counter: 0)
+      first_comment = Comment.create(post: first_post, author: first_user, text: 'This is my first comment')
+      # rubocop:enable Lint/UselessAssignment
+      expect(first_post.comments_counter).to eq 1
+    end
   end
 end
