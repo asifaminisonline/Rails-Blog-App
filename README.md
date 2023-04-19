@@ -161,4 +161,4 @@ I would like to thank microverse for their resources.
 
 ## 📝 License <a name="license"></a>
 
-This project is [MIT](https://github.com/asifaminisonline/Rails-Blog-App/blob/n+1-problems/LICENSE) licensed.
+This project is [MIT](https://github.com/asifaminisonline/Rails-Blog-App/blob/Devise/LICENSE) licensed.
