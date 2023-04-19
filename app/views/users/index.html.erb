@@ -1,15 +1,18 @@
-    <div class="users">
-        <% @users.each do |user| %>
-            <div class="user-container">
-                <img src=<%= user.photo %> alt="user photo">
-                
-                    <div class="name-and-counter">
-                        <a href="/users/<%= user.id %>" class="name-and-counter">
-                        <h1><%= user.name %></h1>
-                        <h3 id="post-counter">Number of posts: <%= user.posts_counter %></h3>
-                </a>
-                    </div>
+<section class="background">
+    <h1 class="users-title">Welcome to Users page</h1>
+    <ul>
+      <% @users.each do |user|%>
+        <%= link_to user do %>
+          <li class="card flex hover">
+            <div class="user-image border">
+              <%= image_tag('R.png',  :width => "100px", :heigth=>"100px") %>
             </div>
+            <div class="user-data border">
+              <h1><%= user.name %></h1>
+              <p class="number-posts">Number of posts: <%= user.post_counter %></p>
+            </div>
+          </li>
         <% end %>
-    </div>
-
+      <% end %>
+    </ul>  
+</section>

@@ -1,40 +1,42 @@
 require 'rails_helper'
 
-RSpec.describe PostsController, type: :request do
-  describe 'GET /index' do
-    it 'returns a success response' do
-      get '/users/745/posts'
-      expect(response).to be_successful
+RSpec.describe Post, type: :model do
+  describe 'For the Post model' do
+    before(:each) do
+      @user = User.new(name: 'Tom', photo: 'image.png', bio: 'Teacher from Mexico', post_counter: 0)
+      @post = Post.new(author: @user, title: 'Test', text: 'testing', likes_counter: 7, comments_counter: 5)
     end
 
-    it 'renders the index template of views/users' do
-      get '/users/745/posts'
-      expect(response).to render_template(:index)
+    before { @post.save }
+
+    it 'if there is title' do
+      @post.title = true
+      expect(@post).to be_valid
     end
 
-    it 'includes the correct placeholder text' do
-      get '/users/745/posts'
-      result = response.body
-      expect(result).to include('User Posts')
+    it 'if there is max 250 characters' do
+      @post.title = 'Testing'
+      expect(@post).to be_valid
     end
 
-    describe 'GET #show' do
-      it 'returns a success response' do
-        get '/users/745/posts/3'
+    it 'if likes counter is integer' do
+      @post.likes_counter = 5
+      expect(@post).to be_valid
+    end
 
-        expect(response).to have_http_status(200)
-      end
+    it 'if likes counter greater than or equal to zero' do
+      @post.likes_counter = -9
+      expect(@post).to_not be_valid
+    end
 
-      it 'renders the show template' do
-        get '/users/745/posts/3'
-        expect(response).to render_template(:show)
-      end
+    it 'if comments counter greater than or equal to zero.' do
+      @post.comments_counter = -5
+      expect(@post).to_not be_valid
+    end
 
-      it 'includes the correct placeholder text' do
-        get '/users/745/posts/3'
-        result = response.body
-        expect(result).to include('Post Details')
-      end
+    it 'if comments counter is integer' do
+      @post.comments_counter = 8
+      expect(@post).to be_valid
     end
   end
 end

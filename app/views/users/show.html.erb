@@ -1,36 +1,37 @@
-<section class="userpage">
-    <div class="user-container">
-        <img src=<%=@user.photo %> alt="user photo">
-        <div class="name-and-counter">
-            <h1>
-                <%= @user.name %>
-            </h1>
-            <h3 id="post-counter">Number of posts: <%= @user.posts_counter %>
-            </h3>
-        </div>
+<section>
+  <div class="card flex">
+    <div class="user-image border">
+      <%= image_tag('R.png',  :width => "100px", :heigth=>"100px") %>
     </div>
-    <hr>
-    <div class="bio">
-        <h2>Bio</h2>
-        <p>
-            <%= @user.bio %>
-        </p>
+    <div class="user-data border">
+      <h1><%= @user.name %></h1>
+      <p class="number-posts">Number of posts: <%= @user.post_counter %></p>
+      <div class="right">
+        <%= link_to "See all users", users_path, class: "btn" %>
+        <%= link_to "Add a post", new_user_post_path(@user), class: "btn right" %>
+      </div>
     </div>
-    <hr>
-    <div class="recent-posts">
-        <% @user.most_recent_posts.each do |post| %>
-            <a href="<%=@user.id%>/posts/<%=post.id%>">
-                <h2><%= post.title %>
-                </h2>
-                <p id="post-text">
-                    <%= post.text.split[0..80].join(" ") %>
-                </p>
-                <div class="comment-like">
-                    <span class="comments">Comments: <%= post.comments_counter%>, </span>
-                    <span class="likes">Likes:<%= post.likes_counter%></span>
-                </div>
-            </a>
-            <% end %>
-            <a href="<%=@user.id%>/posts/" class="button">See all posts</a>
-    </div>
+  </div>
+  <div class="card left">
+    <h4>Biography:</h4><br>
+    <p><%= @user.bio %></p>
+  </div>
+</section>
+<section>
+  <h1 class="users-title">List of recent Posts</h1>
+  <ul>
+    <% @user.recent_posts.each do |post| %>
+      <%= link_to user_post_path(user_id: post.author_id, id: post.id) do %>
+        <li class="card left">
+          <h2><%= post.title%></h2>
+          <p><%= post.text%></p>
+          <div class="right">
+            <span>Comments: <%= post.comments_counter %></span>
+            <span>Likes: <%= post.likes_counter %> </span>
+          </div>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+  <%= link_to "See all posts", user_posts_path(user_id: @user.id), class: "btn" %>
 </section>

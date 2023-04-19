@@ -1,25 +1,32 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.where(author_id: params[:user_id])
     @user = User.find(params[:user_id])
+    @posts = @user.posts.includes(:comments)
   end
 
   def show
     @post = Post.find(params[:id])
-    @comments = @post.comments
-    @like = Like.new
   end
 
   def new
-    @user = current_user
     @post = Post.new
   end
 
   def create
-    @user = current_user
-    @post = Post.new(author_id: @user, title: params[:post][:title], text: params[:post][:text])
-    @post.author_id = @user.id
-    @post.save
-    redirect_to user_posts_path(@user)
+    @author = User.find(params[:user_id])
+    @post = @author.posts.new(post_params)
+
+    if @post.save
+      redirect_to user_path(id: @post.author_id), notice: 'Post was successfully created'
+
+    else
+      render :new, alert: 'Error ccurred while creating the post'
+    end
+  end
+
+  private
+
+  def post_params
+    params.require(:post).permit(:title, :text)
   end
 end

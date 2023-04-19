@@ -1,38 +1,32 @@
-<section class="post-page">
-    <div class='title-and-info'>
-        <h1 id="post-title">
-            <%= @post.title%> by <%= @post.author.name%>
-        </h1>
-        <div class="comment-like-for-post">
-            <span>Comments: <%= @post.comments_counter%>, </span>
-            <span class="likes">Likes:<%= @post.likes_counter%></span>
-        </div>
+<h1>Welcome to post show page</h1>
+
+<section class="card left">
+
+  <div class="card">
+    <h2><%= @post.title %></h2>
+    <p><%= @post.text %></p>
+    <div class="right">
+      <span>Comments: <%= @post.comments_counter %></span>
+      <span>Likes: <%= @post.likes_counter %> </span>
     </div>
-    <p>
-        <%= @post.text %>
-    </p>
-<div class="like-comment-buttons">
-  <%= form_with model: @like, url: user_post_likes_path(1, @post), scope: :like do |form|%>
-     <%= form.submit 'Like post', class: 'like-button' %>
-  <% end %>
-  <button type="button" class="comment-button"><%= link_to "Comment", new_user_post_comment_path( post_id: @post.id), { class: "user-link" } %></button>
-</div>
-
-    <hr id="post-page-hr">
-
-    <div class="comments-container-post">
-        <% @comments=Post.find(@post.id).comments %>
-            <% @comments.each do |comment| %>
-                <div id="single-comment">
-                    <span>
-                        <%= comment.user.name %> : <%= comment.text %>
-                    </span>
-                </div>
-                <% end %>
+    <div class="right my-1 flex justify-end">
+      <%= link_to "Add comment", new_user_post_comment_path(user_id: @post.author_id, post_id: @post.id ), class: "btn" %>
+      <%= form_with model: @like, url: user_post_likes_path(post_id: @post.id) do |form| %>
+        <%= form.submit "Add Like", class: "btn" %>
+      <% end %>
     </div>
+  </div>
 
-    <% if @post.comments_counter !=0 %>
-        <hr id="half">
-        <% end %>
+  <div class="commets-container">
+    <h4>Comments:</h4>
+    <ul>
+      <% @post.comments.each do |comment| %>
+        <p><%= comment.author.name %>: <%= comment.text %></p>
+      <% end %>
+    </ul>
+  </div>
+  <div class="center">
+    <%= link_to "Back to posts", user_path(id: @post.author_id), class: "btn my-1" %>
+  </div>
 
 </section>

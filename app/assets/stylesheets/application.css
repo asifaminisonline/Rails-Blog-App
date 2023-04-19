@@ -1,197 +1,150 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Lato');
+
 * {
-  font-family: 'Roboto', sans-serif;
-}
-
-.users {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.user-container {
-  display: flex;
-  gap: 2rem;
-  margin: 1rem 0;
-  width: 60vw;
-}
-
-.user-container img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-}
-
-.user-container h1 {
-  font-size: 3.5rem;
+  box-sizing: border-box;
+  padding: 0;
   margin: 0;
 }
 
-.name-and-counter {
-  display: flex;
-  flex-direction: column;
-  margin: auto 0;
-  width: 40vw;
+.background {
+  background-color: #fafafa;
 }
 
-#post-counter {
-  margin: 1% 0;
-  align-self: flex-end;
+:root {
+  --primary: #272a31;
+  --secondary: #ec5242;
+  --terciary: #d3d3d3;
+  --brand: #d23228;
+  --success: #0d7d4d;
+  --info: #03c7e8;
+  --warning: #f0cc00;
+  --danger: #ab0d02;
+  --light: #f1ecea;
+  --dark: #00262b;
+  --white: #fff;
+  --lato-font: 'Lato', sans-serif;
+}
+
+body {
+  font-family: var(--lato-font);
+}
+
+ul {
+  list-style: none;
 }
 
 a {
   text-decoration: none;
-  color: inherit;
 }
 
-.userpage,
-.posts-page {
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.center {
+  text-align: center;
+}
+
+.left {
+  text-align: left;
+}
+
+.my-1 {
+  margin: 10px 0;
+}
+
+.right {
+  text-align: right;
+}
+
+.users-title {
+  padding: 15px;
+  margin: 15px 0;
+}
+
+.card {
+  padding: 10px;
+  margin: 20px 0;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+.flex {
   display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
-hr {
-  width: 60vw;
+.justify-end {
+  justify-content: flex-end;
 }
 
-.bio {
-  width: 60vw;
+.hover {
+  cursor: pointer;
 }
 
-.recent-posts {
-  width: 60vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.hover:hover {
+  background-color: #b5f6ff;
+  transform: scale(1.05);
 }
 
-.comment-like {
-  margin-left: 80%;
+.user-image {
+  max-width: 120px;
+  margin: 10px;
+  flex: 20%;
 }
 
-#post-text {
-  margin: 1% 0;
-  width: 60vw;
+.user-data {
+  padding: 10px;
+  text-align: left;
+  margin: 10px;
+  flex: 80%;
 }
 
-.button {
-  margin-top: 7%;
-  padding: 1.5% 4%;
-  border-radius: 5px;
-  background-color: rgb(253, 57, 57);
-  color: white;
+.border {
+  border: 1px solid black;
 }
 
-.comments-container {
-  width: 60vw;
+.number-posts {
+  padding: 10px;
+  text-align: right;
 }
 
-#half {
-  width: 20vw;
-  margin-left: 0;
+.bg-green {
+  background: #0d7d4d;
+  color: #f1ecea;
 }
 
-#post-title {
-  font-size: 2.2rem;
-}
-
-.post-page {
-  width: 55vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 5% auto;
-}
-
-.title-and-info {
-  width: 55vw;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.comment-like-for-post {
-  font-size: 1.2rem;
-}
-
-.post-page p {
-  width: 55vw;
-}
-
-#post-page-hr {
-  margin-left: 0;
-  width: 55vw;
-}
-
-.comments-container-post {
-  width: 55vw;
-  padding: 2% 0;
-}
-
-#single-comment {
-  margin: 2% 0;
-}
-
-.new-post-container,
-.new-comment-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 5%;
-}
-
-.new-post-container textarea {
-  width: 40rem;
-  height: 10vw;
-  resize: none;
-  padding: 2%;
-  outline: 0;
-  font-size: 1.5rem;
-}
-
-.form-input {
-  width: 40.6rem;
-  height: 2vw;
-  outline: 0;
-  font-size: 1.5rem;
-  padding: 0 1%;
-}
-
-.form-container,
-.comment-form-container {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  align-items: center;
-}
-
-.form-button {
-  background-color: rgb(253, 57, 57);
-  color: white;
-  outline: 0;
+.btn {
   border: 0;
-  border-radius: 5px;
-  padding: 2%;
-  width: 15rem;
+  border-radius: 0.25rem;
+  background: #32393f;
+  color: white;
   font-size: 1rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+  padding: 0.25rem 0.5rem;
+  margin: 0.25rem;
   cursor: pointer;
 }
 
-.like-comment-buttons {
-  display: flex;
-  gap: 2rem;
-  margin: 4% 0;
-}
-
-.comment-button,
-.like-button {
-  background-color: rgb(253, 57, 57);
-  color: white;
-  height: 3rem;
-  width: 8rem;
-  border-radius: 5px;
-  outline: 0;
-  border: 0;
-  font-size: 1.2rem;
-  cursor: pointer;
+.commets-container {
+  padding: 10px;
 }
