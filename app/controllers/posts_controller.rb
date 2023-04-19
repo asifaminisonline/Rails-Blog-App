@@ -28,17 +28,3 @@ class PostsController < ApplicationController
     redirect_to user_posts_path
     flash[:success] = 'Post created!'
   end
-
-  def destroy
-    @post = current_user.posts.find(params[:id])
-    @post.destroy
-    flash[:success] = 'Post deleted!'
-    redirect_to user_posts_path
-  end
-
-  private
-
-  def post_params
-    params.require(:post).permit(:title, :text)
-  end
-end
