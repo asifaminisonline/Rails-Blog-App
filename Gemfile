@@ -6,8 +6,6 @@ ruby '3.2.2'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.0.4', '>= 7.0.4.3'
 
-gem 'rubocop', '>= 1.0', '< 2.0'
-
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
@@ -15,6 +13,7 @@ gem 'sprockets-rails'
 gem 'pg', '~> 1.1'
 
 # use devise gem for authentication
+gem 'cancancan'
 gem 'devise'
 gem 'letter_opener'
 
@@ -59,6 +58,10 @@ group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'rails-controller-testing'
   gem 'rspec-rails'
+  # Use Json Web Token (JWT) for token based authentication
+  gem 'jwt'
+  # Use ActiveModel has_secure_password
+  gem 'bcrypt', '~> 3.1.7'
 end
 
 group :development do
