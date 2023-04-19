@@ -16,7 +16,7 @@
     - [Run tests](#run-tests)
   - [👥 Author ](#-author-)
   - [🔭 Future Features ](#-future-features-)
-  - [🤝 Contributing ](#-contributing-)
+  <!-- - [🤝 Contributing ](#-contributing-) -->
   - [⭐️ Show your support ](#️-show-your-support-)
   - [🤝 Acknowledgement ](#-acknowledgement-)
   - [📝 License ](#-license-)
@@ -159,10 +159,6 @@ I would like to thank microverse for their resources.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- LICENSE -->
-
 ## 📝 License <a name="license"></a>
 
 This project is [MIT](https://github.com/asifaminisonline/Rails-Blog-App/blob/n+1-problems/LICENSE) licensed.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
