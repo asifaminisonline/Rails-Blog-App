@@ -1,43 +1,62 @@
-<h1>List of all posts for <%= @user.name %></h1>
+<div class="bg-white rounded-lg shadow-lg p-6 container mx-auto p-8 flex flex-col gap-8">
+  <h1 class="text-3xl font-bold text-center mb-8">List of posts for a given user</h1>
 
-<section>
-  <div class="card flex">
-    <div class="user-image border">
-      <%= image_tag('R.png',  :width => "100px", :heigth=>"100px") %>
+  <div class="flex items-center gap-8">
+    <div>
+      <img src="<%= @user.photo %>" alt="user photo" class="rounded-full h-24 w-24">
     </div>
-    <div class="user-data border">
-      <h1><%= @user.name %></h1>
-      <p class="number-posts">Number of posts: <%= @user.post_counter %></p>
-      <div class="right">
-        <%= link_to "See all users", users_path, class: "btn" %>
-        <%= link_to "Add a post",new_user_post_path(@user), class: "btn right" %>
+
+    <div class="flex flex-col justify-center">
+      <h2 class="text-2xl font-bold leading-tight"><%= @user.name %></h2>
+      <div class="flex flex-row gap-4 mt-2">
+        <p class="text-gray-500 text-lg font-medium">Number of posts:</p>
+        <p class="text-lg font-medium"><%= @user.posts_counter || 0 %></p>
       </div>
     </div>
   </div>
-</section>
-<section>
-  <ul>
+
+  <section class="mt-8">
     <% @posts.each do |post| %>
-      <%= link_to user_post_path(user_id: post.author_id, id: post.id) do %>
-        <li class="card left">
-          <div class="card">
-            <h2><%= post.title %></h2>
-            <p><%= post.text %></p>
-            <div class="right">
-              <span>Comments: <%= post.comments_counter %></span>
-              <span>Likes: <%= post.likes_counter %> </span>
-            </div>
+      <div class="bg-gray-100 rounded-lg p-6">
+        <h3 class="text-2xl font-bold mb-4"><%= link_to post.title, "/users/#{@user.id}/posts/#{post.id}", class: "hover:text-blue-500" %></h3>
+        <p class="text-gray-700 text-lg leading-relaxed"><%= post.text %></p>
+
+        <div class="flex justify-between items-center mt-8">
+          <div>
+            <%= form_with url: "/likes/#{post.id}" do |form| %>
+              <%= form.submit "Like", class: "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all duration-200" %>
+            <% end %>
           </div>
-          <div class="commets-container">
-            <h4>Comments:</h4>
-            <ul>
-              <% post.recent_comments.each do |comment| %>
-                <p><%= comment.author.name %>: <%= comment.text %></p>
-              <% end %>
-            </ul>
+
+          <div class="text-gray-500 text-lg font-medium">
+            <span>Comments: <%= "#{post.comments_counter || 0 }"%></span>
+            <span>, Likes: <%= "#{post.likes_counter || 0 }"%></span>
           </div>
-        </li>
-      <% end %>
+        </div>
+      </div>
+
+      <div class="bg-gray-50 rounded-lg p-6 mt-4">
+        <h4 class="text-xl font-bold mb-4">Comments</h4>
+        <% post.most_recent_comments.includes(:author).each do |comment| %>
+          <div class="flex flex-col gap-1">
+            <span class="font-medium"><%= comment.author.name %>:</span>
+            <span class="text-gray-700 text-lg leading-relaxed"><%= comment.text %></span>
+          </div>  
+        <% end %>
+      </div>
     <% end %>
-  </ul>
-</section>
+  </section>
+
+  <nav class="mt-5 flex justify-center items-center">
+  <%== pagy_nav(@pagy) %>
+</nav>
+
+
+  <div class="flex justify-center mt-12">
+    <a href="/posts/new" class="inline-block rounded-lg bg-blue-500 text-white py-3 px-8 hover:bg-blue-600 transition-all duration-200">
+      <span class="font-bold text-lg">
+        Create new post
+      </span>
+    </a>
+  </div>
+</div>

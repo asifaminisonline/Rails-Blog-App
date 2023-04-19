@@ -1,10 +1,11 @@
 class PostsController < ApplicationController
   def index
     @user = User.find(params[:user_id])
-    @posts = @user.posts.includes(:comments)
+    @pagy, @posts = pagy(@user.posts, items: 10)
   end
 
   def show
+    @user = User.find(params[:user_id])
     @post = Post.find(params[:id])
   end
 
@@ -13,14 +14,13 @@ class PostsController < ApplicationController
   end
 
   def create
-    @author = User.find(params[:user_id])
-    @post = @author.posts.new(post_params)
-
+    @post = current_user.posts.new(post_params)
     if @post.save
-      redirect_to user_path(id: @post.author_id), notice: 'Post was successfully created'
-
+      flash[:success] = 'Post created!'
+      redirect_to "/users/#{current_user.id}/posts"
     else
-      render :new, alert: 'Error ccurred while creating the post'
+      flash[:danger] = 'Post not created!'
+      render :new, status: :unprocessable_entity
     end
   end
 

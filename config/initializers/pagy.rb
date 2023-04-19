@@ -1,0 +1,3 @@
+
+require 'pagy/extras/bootstrap'
+

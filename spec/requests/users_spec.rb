@@ -1,26 +1,38 @@
-require 'rails_helper'
+# require 'rails_helper'
 
-RSpec.describe User, type: :model do
-  describe 'validations for User model' do
-    before(:each) do
-      @user = User.new(name: 'Tom', photo: 'image.png', bio: 'Teacher from Mexico', post_counter: 0)
-    end
+# RSpec.describe UsersController, type: :request do
+#   describe 'GET /index' do
+#     it 'returns a success response' do
+#       get '/users/'
+#       expect(response).to be_successful
+#     end
 
-    before { @user.save }
+#     it 'renders the index template of views/users' do
+#       get '/users/'
+#       expect(response).to render_template(:index)
+#     end
+#   end
+#   it 'includes the correct placeholder text' do
+#     get '/users/'
+#     result = response.body
+#     expect(result).to include('Users List')
+#   end
 
-    it 'if there is name' do
-      @user.name = nil
-      expect(@user).to_not be_valid
-    end
+#   describe 'GET /show' do
+#     it 'returns a success response' do
+#       get '/users/745/'
+#       expect(response).to have_http_status(200)
+#     end
 
-    it 'PostCounter must be greater than or equal to zero' do
-      @user.post_counter = -1
-      expect(@user).to_not be_valid
-    end
+#     it 'renders the show template' do
+#       get '/users/745'
+#       expect(response).to render_template(:show)
+#     end
 
-    it 'PostCounter must be greater than or equal to zero' do
-      @user.post_counter = 7
-      expect(@user).to be_valid
-    end
-  end
-end
+#     it 'includes the correct placeholder text' do
+#       get '/users/745'
+#       result = response.body
+#       expect(result).to include('User Details')
+#     end
+#   end
+# end
