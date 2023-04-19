@@ -1,10 +1,23 @@
 <section>
-  <h1 class="users-title">Add a new post</h1>
-  <%= form_with model: @post, url: user_posts_path, class: "card left" do |form| %>
-    <%= form.label :title %> <br>
-    <%= form.text_field :title %> <br>
-    <%= form.label :text %> <br>
-    <%= form.text_area :text , cols: 30, rows: 10 %> <br>
-    <%= form.submit "Submit", class: "btn" %>
-  <% end %>
+    <h2>New post</h2>
+    <% if @post.errors.any? %>
+        <div>
+            <% @post.errors.full_messages.each do |message| %>
+               <p> <%= message %> </p>
+            <% end %>
+        </div>
+    <% end %>
+
+    <%= form_with model: @post, url: user_posts_path(@user) do |form| %>
+        <div>
+            <%= form.label :title, class: 'form-label' %>
+            <%= form.text_field :title, required: true, autofocus: true, class: 'form-input' %>
+        </div>
+
+        <div>
+            <%= form.label :text, class: 'form-label' %>
+            <%= form.text_field :text, required: true, autofocus: true, class: 'form-input' %>
+        </div>
+        <%= form.submit "submit" %>
+    <% end %>
 </section>

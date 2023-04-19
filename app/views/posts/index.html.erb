@@ -1,43 +1,49 @@
-<h1>List of all posts for <%= @user.name %></h1>
+<h1>List of all posts</h1>
 
-<section>
-  <div class="card flex">
-    <div class="user-image border">
-      <%= image_tag('R.png',  :width => "100px", :heigth=>"100px") %>
+<div class= "user-details gap" >
+    <div class = "user ">
+        <div class = "userphoto">
+            <% if @user.photo %>
+                <img src="<%= @user.photo %>" >
+            <% else %>
+                <p> No image found </p>
+            <% end %>
+        </div>
+
+        <div class = "username">
+                <h2 ><%= @user.name %></h2>
+                <p> Number of posts: <%= @user.posts_counter %> </p>
+        </div>
     </div>
-    <div class="user-data border">
-      <h1><%= @user.name %></h1>
-      <p class="number-posts">Number of posts: <%= @user.post_counter %></p>
-      <div class="right">
-        <%= link_to "See all users", users_path, class: "btn" %>
-        <%= link_to "Add a post",new_user_post_path(@user), class: "btn right" %>
-      </div>
-    </div>
-  </div>
-</section>
-<section>
-  <ul>
-    <% @posts.each do |post| %>
-      <%= link_to user_post_path(user_id: post.author_id, id: post.id) do %>
-        <li class="card left">
-          <div class="card">
-            <h2><%= post.title %></h2>
-            <p><%= post.text %></p>
-            <div class="right">
-              <span>Comments: <%= post.comments_counter %></span>
-              <span>Likes: <%= post.likes_counter %> </span>
+    <% counter = 1 %>
+    
+    <% @user.posts.each do |post| %>
+        <a href=<%= "/users/#{@user.id}/posts/#{post.id}" %> >
+            <div class="post">
+                <div>
+                    <h4>Post #<%= counter %></h4>
+                    <h4>Title: <%= post.title %></h4>
+                    <%= post.text%>
+                    <h6>Comments:<%= post.comments_counter %>, Likes:<%= post.likes_counter %> </h6>
+                </div>
+
+                <div class="post-comments">
+                    <h4> Comments </h4>
+                    <%post.recent_comments.each do |comment|%>
+                        <p>
+                            <strong><%= comment.author.name %>:</strong>
+                            <span><%= comment.text %></span>
+                        </p>
+                    <%end%>
+                </div>
             </div>
-          </div>
-          <div class="commets-container">
-            <h4>Comments:</h4>
-            <ul>
-              <% post.recent_comments.each do |comment| %>
-                <p><%= comment.author.name %>: <%= comment.text %></p>
-              <% end %>
-            </ul>
-          </div>
-        </li>
-      <% end %>
-    <% end %>
-  </ul>
-</section>
+        </a>    
+        <% counter += 1 %>
+    <%end%>
+    
+    <div>
+        <p class="pagination">Pagination</p>
+    </div>
+
+    
+</div>

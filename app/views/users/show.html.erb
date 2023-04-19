@@ -1,37 +1,44 @@
-<section>
-  <div class="card flex">
-    <div class="user-image border">
-      <%= image_tag('R.png',  :width => "100px", :heigth=>"100px") %>
+<h1>Show a particular user</h1>
+
+<div class= "user-details" >
+    <div class = "user">
+        <div class = "userphoto">
+            <% if @user.photo %>
+                <img src="<%= @user.photo %>" >
+            <% else %>
+                <p> No image found </p>
+            <% end %>
+        </div>
+
+        <div class = "username">
+                <h2 ><%= @user.name %></h2>
+                <p> Number of posts: <%= @user.posts_counter %> </p>
+        </div>
     </div>
-    <div class="user-data border">
-      <h1><%= @user.name %></h1>
-      <p class="number-posts">Number of posts: <%= @user.post_counter %></p>
-      <div class="right">
-        <%= link_to "See all users", users_path, class: "btn" %>
-        <%= link_to "Add a post", new_user_post_path(@user), class: "btn right" %>
-      </div>
+
+    <div class = "bio">
+        <h4>Bio</h4>
+        <p> <%= @user.bio %> </p>
     </div>
-  </div>
-  <div class="card left">
-    <h4>Biography:</h4><br>
-    <p><%= @user.bio %></p>
-  </div>
-</section>
-<section>
-  <h1 class="users-title">List of recent Posts</h1>
-  <ul>
+
+    <% counter = 1 %>
     <% @user.recent_posts.each do |post| %>
-      <%= link_to user_post_path(user_id: post.author_id, id: post.id) do %>
-        <li class="card left">
-          <h2><%= post.title%></h2>
-          <p><%= post.text%></p>
-          <div class="right">
-            <span>Comments: <%= post.comments_counter %></span>
-            <span>Likes: <%= post.likes_counter %> </span>
-          </div>
-        </li>
-      <% end %>
+        <a href=<%= "/users/#{@user.id}/posts/#{post.id}" %> >
+            <div class = "eachpost">
+                <h4>Post #<%= counter %></h4>
+                <p><%= post.text %></p>
+                <% counter += 1 %>
+                <h6>Comments:<%= post.comments_counter %> Likes:<%= post.likes_counter %> </h6>
+            </div>
+        </a>
+    
+
     <% end %>
-  </ul>
-  <%= link_to "See all posts", user_posts_path(user_id: @user.id), class: "btn" %>
-</section>
+    <a href="<%= url_for(user_posts_path(@user)) %>" class="button" >
+        <button> See all posts </button>
+    </a>
+    
+    <button class="see-all-post d-flex border">
+        <%= link_to "Create post", new_user_post_path(@user) %>
+    </button>
+</div>

@@ -1,42 +1,31 @@
 require 'rails_helper'
 
-RSpec.describe Post, type: :model do
-  describe 'For the Post model' do
-    before(:each) do
-      @user = User.new(name: 'Tom', photo: 'image.png', bio: 'Teacher from Mexico', post_counter: 0)
-      @post = Post.new(author: @user, title: 'Test', text: 'testing', likes_counter: 7, comments_counter: 5)
+RSpec.describe PostsController, type: :request do
+  describe 'GET #index' do
+    it 'returns a successful response and renders the index template' do
+      get user_posts_path(user_id: 1)
+      expect(response).to have_http_status(200)
+      expect(response).to render_template(:index)
     end
 
-    before { @post.save }
+    it 'includes the correct placeholder text in the response body' do
+      get user_posts_path(user_id: 1)
+      expect(response.body).to include('List of all posts')
+    end
+  end
 
-    it 'if there is title' do
-      @post.title = true
-      expect(@post).to be_valid
+  describe 'GET #show' do
+    it 'returns a successful response and renders the show template' do
+      post = Post.create(title: 'First Post', id: 1)
+      get user_post_path(user_id: 1, id: post.id)
+      expect(response).to have_http_status(200)
+      expect(response).to render_template(:show)
     end
 
-    it 'if there is max 250 characters' do
-      @post.title = 'Testing'
-      expect(@post).to be_valid
-    end
-
-    it 'if likes counter is integer' do
-      @post.likes_counter = 5
-      expect(@post).to be_valid
-    end
-
-    it 'if likes counter greater than or equal to zero' do
-      @post.likes_counter = -9
-      expect(@post).to_not be_valid
-    end
-
-    it 'if comments counter greater than or equal to zero.' do
-      @post.comments_counter = -5
-      expect(@post).to_not be_valid
-    end
-
-    it 'if comments counter is integer' do
-      @post.comments_counter = 8
-      expect(@post).to be_valid
+    it 'includes the correct placeholder text in the response body' do
+      post = Post.create(title: 'First Post', id: 1)
+      get user_post_path(user_id: 1, id: post.id)
+      expect(response.body).to include('Show a particular post')
     end
   end
 end

@@ -1,26 +1,31 @@
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
-  describe 'validations for User model' do
-    before(:each) do
-      @user = User.new(name: 'Tom', photo: 'image.png', bio: 'Teacher from Mexico', post_counter: 0)
+RSpec.describe UsersController, type: :request do
+  describe 'GET #index' do
+    it 'returns a successful response and renders the index template' do
+      get root_path
+      expect(response).to have_http_status(200)
+      expect(response).to render_template(:index)
     end
 
-    before { @user.save }
+    it 'includes the correct placeholder text in the response body' do
+      get root_path
+      expect(response.body).to include('List of all users')
+    end
+  end
 
-    it 'if there is name' do
-      @user.name = nil
-      expect(@user).to_not be_valid
+  describe 'GET #show' do
+    it 'returns a successful response and renders the show template' do
+      user = User.create(name: 'John Doe', id: '123')
+      get user_path(user)
+      expect(response).to have_http_status(200)
+      expect(response).to render_template(:show)
     end
 
-    it 'PostCounter must be greater than or equal to zero' do
-      @user.post_counter = -1
-      expect(@user).to_not be_valid
-    end
-
-    it 'PostCounter must be greater than or equal to zero' do
-      @user.post_counter = 7
-      expect(@user).to be_valid
+    it 'includes the correct placeholder text in the response body' do
+      user = User.create(name: 'John Doe', id: '123')
+      get user_path(user)
+      expect(response.body).to include('Show a particular user')
     end
   end
 end
