@@ -163,6 +163,6 @@ I would like to thank microverse for their resources.
 
 ## 📝 License <a name="license"></a>
 
-This project is [MIT](https://github.com/asifaminisonline/Rails-Blog-App/blob/Authorization/LICENSE) licensed.
+This project is [MIT](https://github.com/asifaminisonline/Rails-Blog-App/blob/API/LICENSE) licensed.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
