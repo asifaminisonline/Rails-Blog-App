@@ -116,11 +116,11 @@ To run tests, run the following command accordingly:
 - Twitter: [@Asif Amin](https://twitter.com/AminAmi53306702)
 - LinkedIn: [@Asif Amin](https://www.linkedin.com/in/asifaminisonline/)
 
-👤 **Bernabas**
+👤 **Peter Ugwu**
 
-- GitHub: [@githubhandle](https://github.com/bernabasy)
-- Twitter: [@twitterhandle](https://twitter.com/@bernabasjosef)
-- LinkedIn: [LinkedIn](https://www.linkedin.com/in/bernabas-yosef)
+- GitHub: [@PeteUgwu](https://github.com/PeteUgwu)
+- Twitter: [@Petrus4Charles](https://twitter.com/Petrus4Charles)
+- LinkedIn: [@peteugwu](https://www.linkedin.com/in/peteugwu/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
