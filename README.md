@@ -16,7 +16,7 @@
     - [Run tests](#run-tests)
   - [👥 Author ](#-author-)
   - [🔭 Future Features ](#-future-features-)
-  - [🤝 Contributing ](#-contributing-)
+  <!-- - [🤝 Contributing ](#-contributing-) -->
   - [⭐️ Show your support ](#️-show-your-support-)
   - [🤝 Acknowledgement ](#-acknowledgement-)
   - [📝 License ](#-license-)
@@ -116,6 +116,12 @@ To run tests, run the following command accordingly:
 - Twitter: [@Asif Amin](https://twitter.com/AminAmi53306702)
 - LinkedIn: [@Asif Amin](https://www.linkedin.com/in/asifaminisonline/)
 
+👤 **Bernabas**
+
+- GitHub: [@githubhandle](https://github.com/bernabasy)
+- Twitter: [@twitterhandle](https://twitter.com/@bernabasjosef)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/bernabas-yosef)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- FUTURE FEATURES -->
@@ -153,10 +159,6 @@ I would like to thank microverse for their resources.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- LICENSE -->
-
 ## 📝 License <a name="license"></a>
 
-This project is [MIT](https://github.com/asifaminisonline/Rails-Blog-App/blob/form/LICENSE) licensed.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+This project is [MIT](https://github.com/asifaminisonline/Rails-Blog-App/blob/Devise/LICENSE) licensed.

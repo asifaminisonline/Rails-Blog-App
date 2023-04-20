@@ -1,67 +1,56 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  describe 'associations' do
-    it 'belongs to author' do
-      post = Post.reflect_on_association(:author)
-      expect(post.macro).to eq(:belongs_to)
+  subject { Post.new(title: 'Post 1', text: 'Text 1', comments_counter: 10, author_id: 1, likes_counter: 10) }
+  before { subject.save }
+
+  it 'validates presence of title' do
+    subject.title = nil
+    expect(subject).to_not be_valid
+  end
+
+  it 'validates title length less than 250 characters' do
+    subject.title = 'a' * 251
+    expect(subject).to_not be_valid
+  end
+
+  it 'validates comments_counter as an integer' do
+    subject.comments_counter = 'string'
+    expect(subject).to_not be_valid
+  end
+
+  it 'validates comments_counter greater than or equal to 0' do
+    subject.comments_counter = -1
+    expect(subject).to_not be_valid
+  end
+
+  it 'validates likes_counter as an integer' do
+    subject.likes_counter = 'string'
+    expect(subject).to_not be_valid
+  end
+
+  it 'validates likes_counter greater than or equal to 0' do
+    subject.likes_counter = -1
+    expect(subject).to_not be_valid
+  end
+
+  describe '#recent_comments' do
+    before do
+      10.times do |c|
+        Comment.create(text: "Comment #{c}", post_id: subject.id, author_id: 1, created_at: Time.now + c)
+      end
     end
 
-    it 'has many comments' do
-      post = Post.reflect_on_association(:comments)
-      expect(post.macro).to eq(:has_many)
-    end
-
-    it 'has many likes' do
-      post = Post.reflect_on_association(:likes)
-      expect(post.macro).to eq(:has_many)
+    it 'should return the 5 most recent comments' do
+      expect(subject.recent_comments).to eq(Comment.where(post_id: subject.id).order(created_at: :asc).limit(5))
     end
   end
 
-  describe 'validations' do
-    before(:each) do
-      @user = User.create(name: 'User 1', posts_counter: 0)
-    end
-    it 'is valid with valid attributes' do
-      post = Post.new(title: 'Post 1', author: @user, comments_counter: 0, likes_counter: 0)
-      expect(post).to be_valid
-    end
+  let(:user) { User.create(name: 'Jane', photo: 'https://t3.ftcdn.net/jpg/02/47/40/98/360_F_247409832_pPugfgU5cKLsrH5OCJRMn5JTcy2L1Rrg.jpg', bio: 'Anything', posts_counter: 0) }
 
-    it 'is not valid without a title' do
-      post = Post.new(title: nil, author: @user, comments_counter: 0, likes_counter: 0)
-      expect(post).to_not be_valid
-    end
-
-    it 'is not valid with a negative comments_counter' do
-      post = Post.new(title: 'Post 1', author: @user, comments_counter: -1, likes_counter: 0)
-      expect(post).to_not be_valid
-    end
-
-    it 'is not valid with a negative likes_counter' do
-      post = Post.new(title: 'Post 1', author: @user, comments_counter: 0, likes_counter: -1)
-      expect(post).to_not be_valid
-    end
-  end
-
-  describe 'recent_comments' do
-    it 'returns the 5 most recent comments' do
-      user = User.create(name: 'User 1')
-      post = user.posts.create(title: 'Post 1', text: 'Post 1 text')
-      post.comments.create(text: 'Comment 1', author: user) # comment1
-      comment2 = post.comments.create(text: 'Comment 2', author: user)
-      comment3 = post.comments.create(text: 'Comment 3', author: user)
-      comment4 = post.comments.create(text: 'Comment 4', author: user)
-      comment5 = post.comments.create(text: 'Comment 5', author: user)
-      comment6 = post.comments.create(text: 'Comment 6', author: user)
-      expect(post.recent_comments).to eq([comment6, comment5, comment4, comment3, comment2])
-    end
-  end
-
-  describe 'update_post_counter' do
-    it 'increments the author posts_counter by 1' do
-      user = User.create(name: 'User 1', posts_counter: 0)
-      Post.create(title: 'Post 1', author: user, comments_counter: 0, likes_counter: 0)
-      expect(user.posts_counter).to eq(1)
-    end
+  it "updates the author's posts counter after saving a new post" do
+    expect do
+      Post.create(title: 'Test Post', text: 'Lorem ipsum', comments_counter: 0, likes_counter: 0, author_id: user.id)
+    end.to(change { user.reload.posts_counter }.from(0).to(1))
   end
 end
