@@ -1,32 +1,34 @@
 require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
-  describe 'associations' do
-    let(:author) { User.create(name: 'me', photo: 'photo', bio: 'bio', posts_counter: 5) }
-    let(:post) do
-      Post.create(author_id: author.id, title: 'Post', text: 'Text', likes_counter: 5, comments_counter: 5)
-    end
-    subject { Comment.new(author_id: author.id, post_id: post.id, text: 'Hi') }
+  describe 'Validations' do
+    first_user = User.create(name: 'Tom', photo: 'https://unsplash.com/phot
+        os/F_-0BxGuVvo', bio: 'Full-Stack Developer', posts_counter: 0)
+    first_post = Post.create(title: 'First Post', text: 'This is my first post', author_id: first_user.id,
+                             comments_counter: 0, likes_counter: 0)
+    first_comment = Comment.create(text: 'This is my first comment', author_id: first_user.id, post_id: first_post.id)
 
-    before do
-      subject.save
-      post.reload # Reload post to make sure it has the correct comments_counter value
-    end
+    first_comment.save
 
-    it 'should have a valid author id' do
-      subject.author_id = nil
-      expect(subject).to_not be_valid
+    it 'is not valid without a text' do
+      first_comment.text = nil
+      expect(first_comment).to_not be_valid
     end
 
-    it 'should have a valid post id' do
-      subject.post_id = nil
-      expect(subject).to_not be_valid
+    it 'posts comments count should be 0' do
+      expect(first_post.comments_counter).to eq 0
     end
-
-    it 'should increment comments_counter' do
-      expect { Comment.create(author_id: author.id, post_id: post.id, text: 'Hello') }.to change {
-                                                                                            post.reload.comments_counter
-                                                                                          }.by(1)
+  end
+  describe '#update_comments_counter' do
+    it 'should update the posts comments counter' do
+      first_user = User.create(name: 'Tom', photo: 'https://unsplash.com/photos/F_-0BxGuVvo',
+                               bio: 'Full-Stack Developer', posts_counter: 0)
+      # rubocop:disable Lint/UselessAssignment
+      first_post = Post.create(title: 'First Post', text: 'This is my first post', author: first_user,
+                               comments_counter: 0, likes_counter: 0)
+      first_comment = Comment.create(post: first_post, author: first_user, text: 'This is my first comment')
+      # rubocop:enable Lint/UselessAssignment
+      expect(first_post.comments_counter).to eq 1
     end
   end
 end

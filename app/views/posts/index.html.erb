@@ -1,19 +1,44 @@
-<div class="container">
-    <h1>Posts List</h1>
-    <%= render partial: "/shared/user", locals: { user: @user } %>
-    <div class="user-posts">
-        <% @posts.each.with_index(1) do |post, index| %>
-            <div class="post-with-comments">
-            <a href="/users<%= @user.id %>/posts<%= post.id %>">
-                <%= render partial: "/shared/post", locals: { post: post, index: index } %>
-            </a>
-                <div class="comments">
-                    <% post.recent_comments.each do |comment| %>
-                        <%= render partial: "/shared/comment", locals: { comment: comment } %>
-                    <% end %>
-                </div>
+<main>
+    <div class="single-user container">
+        <section class="user">
+            <img src=<%= @user.photo %> alt="User Photo" class="user-photo">
+            <div class="user-detail">
+                <h2 class="user-name"><%= @user.name%></h2>
+                <h4 class="post-count">Number of posts: <%= @user.posts_counter %> </h4>
             </div>
+        </section>
+        <hr>
+        
+        <section class="posts container">
+  <h3>All Posts from <%= @user.name %></h3>
+  <% @user.posts.includes(comments:[:author]).each do |post| %>
+    
+      <div class="post">
+        <div class="post-content">
+        
+          <h4><a href="/users/<%=@user.id%>/posts/<%=post.id%>"><%= post.title %></a></h4>
+          
+          <p><%= truncate(post.text, length: 200) %></p>
+          <footer class="post-footer">
+          <span class="comment-count">Comments: <%= post.comments_counter %></span>,
+          <span class="like-count">Likes: <%= post.likes_counter %></span>
+        </footer>
+        </div>
+        
+        <div class="comments">
+        <h5>Comments</h5>
+        <% post.comments.each do |comment| %>
+          <div id="single-comment"> 
+            <span> <%= comment.author.name %> : <%= comment.text %></span>
+          </div>
         <% end %>
-        <button class="btn btn-primary">More Posts</button>
+      </div>
+      </div>
+      <button>More Posts</button>
+  <% end %>
+</section>
+
+
     </div>
-</div>
+
+</main>

@@ -1,19 +1,39 @@
-<div class="container">
-    <h1>User Detail</h1>
-    <%= render partial: "/shared/user", locals: { user: @user } %>
-    <div class="user-bio">
-        <h5>Bio</h5>
-        <p><%= @user.bio %></p>
+<main>
+    <div class="single-user container">
+        <section class="user">
+            <img src=<%= @user.photo %> alt="User Photo" class="user-photo">
+            <div class="user-detail">
+                <h2 class="user-name"><%= @user.name%></h2>
+                <h4 class="post-count">Number of posts: <%= @user.posts_counter %> </h4>
+            </div>
+        </section>
+        <hr>
+        <section class="bio">
+            <h3>Bio</h3>
+            <p><%= @user.bio %></p>
+        <section>
+        <hr>
+        <section class="posts container">
+            <h3>Recent Posts</h3>
+            <div class="posts">
+            <% @user.most_recent_posts.each do |post| %>
+            
+                <div class="post">
+                    <div class="post-content">
+                        <h4><a href="<%=@user.id%>/posts/<%=post.id%>"><%= post.title %></a></h4>
+                        <p><%= truncate(post.text, length: 200) %></p>
+                    </div>
+                    <footer class="post-footer">
+                    <span class="comment-count">Comments: <%= post.comments_counter %></span>, <span class="like-count">Likes: <%= post.likes_counter %></span>
+                    </footer>
+                    </div>
+               
+                
+                
+            <% end %>
+            </div>
+            <a href="<%=@user.id%>/posts/" class="button">View all posts</a>
+        </section>
     </div>
-    <div class="user-posts">
-        <h5>Posts</h5>
-        <% @user.recent_posts.each.with_index(1) do |post, index| %>
-            <a href="/users<%= @user.id %>/posts<%= post.id %>">
-                <%= render partial: "/shared/post", locals: { post: post, index: index } %>
-            </a>
-        <% end %>
-        <a href="/users<%= @user.id %>/posts">
-            <button class="btn btn-primary">See all posts</button>
-        </a>
-    </div>
-</div>
+
+</main>

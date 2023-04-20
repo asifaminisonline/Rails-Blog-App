@@ -1,9 +1,15 @@
-<div class="container">
-    <h1>My Blog</h1>
-    <a href="/posts/new"><button type="button">Create a Post</button></a>
+<main>
+<div class="users container">
+    <h1>Users</h1>
     <% @users.each do |user| %>
-        <a href="/users<%= user.id %>">
-            <%= render partial: "/shared/user", locals: { user: user } %>
-        </a>
+        <div class="user">
+            <img src=<%= user.photo %> alt="User Photo" class="user-photo">
+            <div class="user-detail">
+                <h2 class="user-name"><a href="/users/<%= user.id %>"><%= user.name%></a></h2>
+                <h4 class="post-count">Number of posts: <%= user.posts_counter %> </h4>
+            </div>
+
+        </div>
     <% end %>
 </div>
+</main>

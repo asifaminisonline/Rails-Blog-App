@@ -1,8 +1,0 @@
-<div class="post">
-    <h5>Post<%= "#" %> <%=index %> <%=post.title %></h5>
-    <p><%= post.text.truncate(100,omission:'...') %></p>
-    <ul>
-        <li>Comments: <%= post.comments_counter || 0 %> </li>
-        <li>Likes: <%= post.likes_counter || 0 %> </li>
-    </ul>
-</div>

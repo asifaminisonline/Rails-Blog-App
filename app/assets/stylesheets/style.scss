@@ -1,0 +1,189 @@
+* {
+  box-sizing: border-box;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 600px;
+}
+
+.post-link {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+a {
+  text-decoration: none;
+  color: #1a1a1a;
+
+  &:hover {
+    color: #000;
+  }
+}
+
+.user-link,
+.post-link {
+  text-decoration: none;
+  color: black;
+  width: 100%;
+  height: auto;
+
+  &:hover {
+    background-color: rgba(128, 128, 128, 0.261);
+  }
+
+  padding: 16px;
+  border-radius: 8px;
+  transition: 500ms ease;
+  border: 1px solid;
+}
+
+.users {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 32px;
+}
+
+.user-detail {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 32px;
+  justify-content: space-between;
+  min-width: 425px;
+}
+
+.posts {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.post {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid;
+  padding: 16px;
+
+  &:hover {
+    background-color: rgba(128, 128, 128, 0.261);
+  }
+
+  border-radius: 8px;
+  transition: 500ms ease;
+  gap: 16px;
+}
+
+.post-count {
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+
+.user-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+}
+
+.post-footer {
+  text-align: right;
+}
+
+.button {
+  background-color: #1a1a1a;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 16px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: 500ms ease;
+
+  &:hover {
+    background-color: #333;
+  }
+}
+
+.comment-form,
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+
+  .button {
+    align-self: flex-end;
+  }
+}
+
+.comments,
+.post-content {
+  padding: 16px;
+  border: 1px solid;
+}
+
+.single-post {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .post-footer {
+    text-align: left;
+  }
+
+  .comments {
+    border: none;
+    padding: 0;
+
+    h5 {
+      margin-top: 0;
+    }
+  }
+
+  .post-meta {
+    text-align: right;
+  }
+}
+
+.post-interactions {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+
+  .button {
+    padding: 8px 16px;
+    line-height: 1;
+  }
+}
+
+hr {
+  border-color: rgb(23, 23, 23);
+  background: rgb(23, 23, 23);
+  width: 100%;
+  align-self: center;
+}
+
+.single-user {
+  .button {
+    align-self: center;
+  }
+}

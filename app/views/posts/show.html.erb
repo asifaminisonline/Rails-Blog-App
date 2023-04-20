@@ -1,43 +1,35 @@
-<div class="container">
-    <h1>Posts Detail</h1>
-    <div class="post-detail">
-        <div class="post-head">
-            <h5>Post <%=@post.id %> <%= @post.title %> <% 'by' %> <%= @user.name %></h5>
-            <ul>
-            <li class="like-form">
-                    <%= form_with model: like, method: :post, url: new_user_like_path, local: true, scope: :new_like do |form| %>
-                        <%= form.submit "Like", class: "btn btn-primary" %>
-                        <%= form.hidden_field :post_id, value: @post.id %>
-                    <% end %>
-                </li>
-                <li>Comments: <%= @post.comments_counter || 0 %> </li>
-                <li>Likes: <%= @post.likes_counter || 0 %> </li>
-            </ul>
+<main>
+    <div class="single-post container">
+        <header class="post-header">
+        <h1 id="post-title">
+            <%= @post.title%> by <%= @post.author.name%>
+        </h1>
+        <div class="post-meta">
+            <span>Comments: <%= @post.comments_counter%>, </span>
+            <span class="likes">Likes: <%= @post.likes_counter%></span>
         </div>
+        </header>
+        <hr>
         <div class="post-body">
-            <p><%= @post.text %></p>
+        <%= @post.text%>
         </div>
-    </div>
-    <div class="comments">
-        <h4>Comments</h4>
-        <h5>New Comment</h5>
-        <%= form_with model: comment, method: :post, url: new_user_comment_path, local: true, scope: :new_comment do |form| %> 
-            <div class="form-group">
-                <%= form.label :Comment %>
-                <%= form.text_area :text, size:"100x3", class: "form-control" %>
-                <%= form.hidden_field :post_id, value: @post.id %>
+        <hr style="width:66%; min-width: 300px;">
+        <footer class="post-footer">
+        <div class="post-interactions">
+            <%= form_with model: @like, url: user_post_likes_path(1, @post), scope: :like do |form|%>
+                <%= form.submit 'Like post', class: 'button' %>
+            <% end %>
+            <%= link_to "Comment", new_user_post_comment_path( post_id: @post.id), { class: "button" } %>
+        </div>
+        <div class="comments">
+                <h5>Comments</h5>
+                <% @comments=Post.find(@post.id).comments %>
+                    <% @comments.includes(:author).each do |comment| %>
+                        <div  id="single-comment">
+                            <span> <%= comment.author.name %> : <%= comment.text %></span>
+                        </div>
+                    <% end %>
             </div>
-            <% if flash.now[:alert] %>
-                <p class="alert"><%= flash[:alert] %></p>
-            <% end %>
-            <% if flash.now[:notice] %> 
-                <p class="notice"><%= flash[:notice] %></p>
-            <% end %>
-            <%= form.submit "Submit", class: "btn btn-primary" %>
-        <% end %>
-        <h5>Recent Comments</h5>
-        <% @post.comments.order(created_at: :desc).each do |comment| %>
-            <%= render partial: "/shared/comment", locals: { comment: comment } %>
-        <% end %>
+        </footer>
     </div>
-</div>
+</main>
