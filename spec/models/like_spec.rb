@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Like, type: :model do
   describe 'Validations' do
-    first_user = User.create(name: 'Tom', photo: 'https://unsplash.com/phot
-os/F_-0BxGuVvo', bio: 'Teacher from Mexico.', posts_counter: 0)
+    first_user = User.create(name: 'Tom', photo: 'https://images.unsplash.com/photo-1583864697784-a0efc8379f70?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80', bio: 'Teacher from Mexico.', posts_counter: 0)
     first_post = Post.create(author: first_user, title: 'Hello', text: 'Thi
         s is my first post', comments_counter: 0, likes_counter: 0)
     first_like = Like.create(author_id: first_user.id, post_id: first_post.id)

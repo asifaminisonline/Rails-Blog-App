@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
   describe 'Validations' do
-    first_user = User.create(name: 'Tom', photo: 'https://unsplash.com/phot
-        os/F_-0BxGuVvo', bio: 'Full-Stack Developer', posts_counter: 0)
+    first_user = User.create(name: 'Tom', photo: 'https://images.unsplash.com/photo-1583864697784-a0efc8379f70?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80', bio: 'Full-Stack Developer', posts_counter: 0)
     first_post = Post.create(title: 'First Post', text: 'This is my first post', author_id: first_user.id,
                              comments_counter: 0, likes_counter: 0)
     first_comment = Comment.create(text: 'This is my first comment', author_id: first_user.id, post_id: first_post.id)

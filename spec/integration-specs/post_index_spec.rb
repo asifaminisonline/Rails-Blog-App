@@ -5,7 +5,7 @@ RSpec.describe 'Post index page', type: :feature do
   let!(:users) { [first_user] }
   let!(:posts) { Post.all }
   # Create a test user with associated posts and comments to be displayed on the show page
-  first_user = User.create(name: 'Jerry', photo: 'https://unsplash.com/photos/iFgRcqHznqg',
+  first_user = User.create(name: 'Jerry', photo: 'https://images.unsplash.com/photo-1583864697784-a0efc8379f70?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80',
                            bio: 'Teacher from Mexico.', posts_counter: 0)
 
   first_post = Post.create(title: 'First Post', text: 'This is my first post', author_id: first_user.id,
