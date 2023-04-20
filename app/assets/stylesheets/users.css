@@ -1,0 +1,105 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container > * {
+  margin-bottom: 30px;
+}
+
+h2 {
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  all: unset;
+}
+
+.card {
+  display: flex;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+}
+
+.card > :not(:last-child) {
+  margin-right: 100px;
+}
+
+.userpic {
+  width: 110px;
+  height: 110px;
+}
+
+.leftcard {
+  border: 2px solid black;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.username {
+  padding: 1rem;
+  padding-bottom: 0;
+}
+
+.count {
+  align-self: flex-end;
+  padding: 0.5rem;
+}
+
+.biodiv {
+  border: 2px solid black;
+  width: 80%;
+  padding: 0.5rem;
+}
+
+.biodiv > * {
+  margin-bottom: 0.5rem;
+}
+
+.postcard {
+  border: 2px solid black;
+  width: 80%;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.postcard > :not(:last-child) {
+  margin-bottom: 0.5rem;
+}
+
+.commentscard {
+  border: 2px solid black;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+}
+
+.subcontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.subcontainer > :not(:last-child) {
+  margin-bottom: 0.5rem;
+}
+
+.button {
+  padding: 1rem;
+  border: 2px solid black;
+  box-shadow: 2px 2px;
+}
+
+.container.postscreen > * {
+  margin-bottom: 2px;
+}

@@ -1,49 +1,35 @@
-# require 'rails_helper'
+require 'rails_helper'
 
-# RSpec.describe User, type: :model do
-#   describe 'associations' do
-#     it 'has many posts' do
-#       user = User.reflect_on_association(:posts)
-#       expect(user.macro).to eq(:has_many)
-#     end
+RSpec.describe User, type: :model do
+  subject { User.new(name: 'John', photo: 'https://t3.ftcdn.net/jpg/02/47/40/98/360_F_247409832_pPugfgU5cKLsrH5OCJRMn5JTcy2L1Rrg.jpg', bio: 'Anything', posts_counter: 5) }
 
-#     it 'has many comments' do
-#       user = User.reflect_on_association(:comments)
-#       expect(user.macro).to eq(:has_many)
-#     end
+  before { subject.save }
 
-#     it 'has many likes' do
-#       user = User.reflect_on_association(:likes)
-#       expect(user.macro).to eq(:has_many)
-#     end
-#   end
+  it 'validates presence of name' do
+    subject.name = nil
+    expect(subject).to_not be_valid
+  end
 
-#   describe 'validations' do
-#     it 'is valid with valid attributes' do
-#       user = User.new(name: 'John', posts_counter: 0)
-#       expect(user).to be_valid
-#     end
+  it 'validates that posts_counter is an integer' do
+    subject.posts_counter = 'string'
+    expect(subject).to_not be_valid
+  end
 
-#     it 'is not valid without a name' do
-#       user = User.new(name: nil, posts_counter: 0)
-#       expect(user).to_not be_valid
-#     end
+  it 'validates posts_counter greater than or equal to 0' do
+    subject.posts_counter = -1
+    expect(subject).to_not be_valid
+  end
 
-#     it 'is not valid with a negative posts_counter' do
-#       user = User.new(name: 'John', posts_counter: -1)
-#       expect(user).to_not be_valid
-#     end
-#   end
+  describe '#recent_posts' do
+    before do
+      6.times do |p|
+        Post.create(title: "Post #{p}", text: "Text #{p}", comments_counter: 10, author_id: subject.id,
+                    likes_counter: 10)
+      end
+    end
 
-#   describe 'recent_posts' do
-#     it 'returns the 3 most recent posts' do
-#       user = User.create(name: 'User1')
-#       user.posts.create(title: 'Post 1', text: 'Post 1 text') # post1
-#       user.posts.create(title: 'Post 2', text: 'Post 2 text') # post2
-#       post3 = user.posts.create(title: 'Post 3', text: 'Post 3 text')
-#       post4 = user.posts.create(title: 'Post 4', text: 'Post 4 text')
-#       post5 = user.posts.create(title: 'Post 5', text: 'Post 5 text')
-#       expect(user.recent_posts).to eq([post5, post4, post3])
-#     end
-#   end
-# end
+    it 'returns the three most recent posts' do
+      expect(subject.recent_posts).to eq(subject.posts.order(created_at: :asc).limit(3))
+    end
+  end
+end

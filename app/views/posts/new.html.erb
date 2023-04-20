@@ -1,25 +1,17 @@
-<div class="bg-white rounded-lg shadow-lg p-6 container mx-auto">
-
-  <div>
-    <h1 class="text-3xl font-medium mb-4">Create new post</h1>
-
-    <%= form_with model: @post do |form| %>
-
-      <div class="mb-4">
-        <%= form.label :title, class: "block font-medium text-gray-700 mb-2" %>
-        <%= form.text_field :title, class: "w-full border border-gray-300 rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", placeholder: "Post title" %>
-      </div>
-
-      <div class="mb-4">
-        <%= form.label :text, class: "block font-medium text-gray-700 mb-2" %>
-        <%= form.text_area :text, class: "w-full border border-gray-300 rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", placeholder: "Post text..." %>
-      </div>
-
-      <div class="flex items-center justify-center">
-        <%= form.submit "Create Post", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
-      </div>
-
+<div class="container">
+    <h1>New Post</h1>
+    <%= form_with model: post, method: :post, url: new_user_post_path, local: true, scope: :new_post do |form| %> 
+        <div class="form-group">
+            <%= form.label :title %>
+            <%= form.text_field :title, class: "form-control" %>
+        </div>
+        <div class="form-group">
+            <%= form.label :text %>
+            <%= form.text_area :text, size:"100x10", class: "form-control" %>
+        </div>
+        <% if flash.now[:alert] %>
+            <p class="alert"><%= flash[:alert] %></p>
+        <% end %>
+        <%= form.submit "Submit", class: "btn btn-primary" %>
     <% end %>
-  </div>
-
 </div>

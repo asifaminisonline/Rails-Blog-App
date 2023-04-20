@@ -1,14 +1,9 @@
-<div class="bg-white rounded-lg shadow-lg container mx-auto p-8">
-  <h1 class="text-3xl font-medium text-center mb-4">List of users</h1>
-  <% @users.each do |user| %>        
-    <a href=<%= "users/#{user.id}"%> class="flex items-center gap-4 hover:bg-gray-100 p-4 rounded-lg">
-      <%= image_tag(user.photo, class: "rounded-full w-12 h-12")%>
-      <div class="flex-1">
-        <h2 class="text-2xl font-medium text-gray-800"><%= user.name %></h2>
-        <span class="text-lg text-gray-500">
-          Number of posts: <%= user.posts_counter || 0 %>
-        </span>
-      </div>
-    </a> 
-  <% end %>
+<div class="container">
+    <h1>My Blog</h1>
+    <a href="/posts/new"><button type="button">Create a Post</button></a>
+    <% @users.each do |user| %>
+        <a href="/users<%= user.id %>">
+            <%= render partial: "/shared/user", locals: { user: user } %>
+        </a>
+    <% end %>
 </div>

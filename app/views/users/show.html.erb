@@ -1,34 +1,19 @@
-<div class="bg-white rounded-lg shadow-lg p-6 container mx-auto p-8">
-  <h1 class="text-3xl font-medium mb-5">Single user</h1>
-
-  <div class="py-4">
-    <img src="<%= @user.photo %>" alt="user photo" class="w-32 h-32 rounded-full mx-auto mb-4">
-    <h2 class="text-2xl font-medium text-center mb-2"><%= @user.name %></h2>
-    <p class="text-xl text-center text-gray-500 mb-6">Number of posts: <span class="text-gray-700"><%= @user.posts_counter %></span></p>
-    <div class="text-xl mb-6">
-      <h2 class="font-medium">Bio</h2>
-      <p><%= @user.bio %></p>
+<div class="container">
+    <h1>User Detail</h1>
+    <%= render partial: "/shared/user", locals: { user: @user } %>
+    <div class="user-bio">
+        <h5>Bio</h5>
+        <p><%= @user.bio %></p>
     </div>
-
-    <div class="mt-8">
-      <% @user.most_recent_posts.each do |post| %>
-        <div class="mb-8">
-          <h2 class="font-bold text-2xl mb-2">Post #<%= post.id %></h2>
-          <p class="text-xl mb-4"><%= post.text %></p>
-          <div class="flex text-gray-500 text-xl">
-            <span class="mr-8">Comments: <%= "#{post.comments_counter || 0 }" %></span>
-            <span>Likes: <%= "#{ post.likes_counter || 0 }" %></span>
-          </div>
-        </div>
-      <% end %>
-    </div>
-
-    <div class="flex justify-center mt-8">
-      <div class="p-2 bg-blue-500 rounded">
-        <a href="/users/<%= @user.id %>/posts" class="text-white font-semibold">
-          See All Posts
+    <div class="user-posts">
+        <h5>Posts</h5>
+        <% @user.recent_posts.each.with_index(1) do |post, index| %>
+            <a href="/users<%= @user.id %>/posts<%= post.id %>">
+                <%= render partial: "/shared/post", locals: { post: post, index: index } %>
+            </a>
+        <% end %>
+        <a href="/users<%= @user.id %>/posts">
+            <button class="btn btn-primary">See all posts</button>
         </a>
-      </div>
     </div>
-  </div>
 </div>

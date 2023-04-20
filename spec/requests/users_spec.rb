@@ -1,38 +1,34 @@
 # require 'rails_helper'
 
-# RSpec.describe UsersController, type: :request do
-#   describe 'GET /index' do
-#     it 'returns a success response' do
-#       get '/users/'
+# RSpec.describe '/Users', type: :request do
+#   let(:seeded_user) { User.first } # pick the first user from seed file
+#   describe 'Get/index' do
+#     before(:example) do
+#       get '/users'
+#     end
+#     it 'renders a successful response' do
 #       expect(response).to be_successful
 #     end
-
-#     it 'renders the index template of views/users' do
-#       get '/users/'
+#     it 'renders the correct template' do
 #       expect(response).to render_template(:index)
 #     end
-#   end
-#   it 'includes the correct placeholder text' do
-#     get '/users/'
-#     result = response.body
-#     expect(result).to include('Users List')
-#   end
-
-#   describe 'GET /show' do
-#     it 'returns a success response' do
-#       get '/users/745/'
-#       expect(response).to have_http_status(200)
+#     it 'contains the correct text' do
+#       expect(response.body).to include('Here is a list of all users')
 #     end
+#   end
 
-#     it 'renders the show template' do
-#       get '/users/745'
+#   describe 'Get/show' do
+#     before(:example) do
+#       get "/users/#{seeded_user.id}" # use seeded user's id for show action
+#     end
+#     it 'renders a successful response' do
+#       expect(response).to be_successful
+#     end
+#     it 'renders the correct template' do
 #       expect(response).to render_template(:show)
 #     end
-
-#     it 'includes the correct placeholder text' do
-#       get '/users/745'
-#       result = response.body
-#       expect(result).to include('User Details')
+#     it 'contains the correct text' do
+#       expect(response.body).to include('Here are the detials about User ABC')
 #     end
 #   end
 # end

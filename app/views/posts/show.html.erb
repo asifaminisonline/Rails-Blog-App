@@ -1,22 +1,43 @@
-<div class="bg-white rounded-lg shadow-lg p-6 container mx-auto">
-  <h1 class="text-3xl font-medium mb-4">Single post for a given user</h1>
-  <h2 class="mb-4">Post #<%= @post.id %> by <%= @user.name %></h2>
-  <div class="flex mb-4 text-gray-500 text-sm">
-    <span class="mr-4">Comments: <%= @post.comments_counter %></span>
-    <span>Likes: <%= @post.likes_counter %></span>
-  </div>
-  <p class="text-lg mb-4"><%= @post.text %></p>
-  <% @post.most_recent_comments.each do |comment| %>
-    <div class="flex mb-2">
-      <span class="font-medium mr-2"><%= comment.author.name %>:</span>
-      <span class="text-gray-500"><%= comment.text %></span>
+<div class="container">
+    <h1>Posts Detail</h1>
+    <div class="post-detail">
+        <div class="post-head">
+            <h5>Post <%=@post.id %> <%= @post.title %> <% 'by' %> <%= @user.name %></h5>
+            <ul>
+            <li class="like-form">
+                    <%= form_with model: like, method: :post, url: new_user_like_path, local: true, scope: :new_like do |form| %>
+                        <%= form.submit "Like", class: "btn btn-primary" %>
+                        <%= form.hidden_field :post_id, value: @post.id %>
+                    <% end %>
+                </li>
+                <li>Comments: <%= @post.comments_counter || 0 %> </li>
+                <li>Likes: <%= @post.likes_counter || 0 %> </li>
+            </ul>
+        </div>
+        <div class="post-body">
+            <p><%= @post.text %></p>
+        </div>
     </div>
-  <% end %>
-  <div class="mt-4">
-    <h3 class="text-lg font-medium mb-2">Add a comment:</h3>
-    <%= form_for [@post, Comment.new], url: "/comments/#{ @post.id }" do |form| %>
-      <%= form.text_area :text, placeholder: "Add comment", class: "w-full rounded-lg p-2 border-gray-300 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-600" %>
-      <%= form.submit "Add Comment", class: "bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 transition-all duration-200 rounded-lg" %>
-    <% end %>
-  </div>
+    <div class="comments">
+        <h4>Comments</h4>
+        <h5>New Comment</h5>
+        <%= form_with model: comment, method: :post, url: new_user_comment_path, local: true, scope: :new_comment do |form| %> 
+            <div class="form-group">
+                <%= form.label :Comment %>
+                <%= form.text_area :text, size:"100x3", class: "form-control" %>
+                <%= form.hidden_field :post_id, value: @post.id %>
+            </div>
+            <% if flash.now[:alert] %>
+                <p class="alert"><%= flash[:alert] %></p>
+            <% end %>
+            <% if flash.now[:notice] %> 
+                <p class="notice"><%= flash[:notice] %></p>
+            <% end %>
+            <%= form.submit "Submit", class: "btn btn-primary" %>
+        <% end %>
+        <h5>Recent Comments</h5>
+        <% @post.comments.order(created_at: :desc).each do |comment| %>
+            <%= render partial: "/shared/comment", locals: { comment: comment } %>
+        <% end %>
+    </div>
 </div>
