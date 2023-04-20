@@ -8,7 +8,6 @@ class PostsController < ApplicationController
 
   def show
     @user = User.find(params[:user_id])
-    # @post = Post.find(params[:id])
     @post = Post.includes(:likes, :comments).find(params[:id])
     @likes = @post.likes
   end
@@ -30,11 +29,15 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = current_user.posts.find(params[:id])
-    @post.destroy
-    flash[:success] = 'Post deleted!'
+    @post = Post.find(params[:id])
+    if current_user.admin? || current_user == @post.user
+      @post.destroy
+      flash[:success] = 'Post deleted!'
+    else
+      flash[:error] = 'You are not authorized to delete this post.'
+    end
     redirect_to user_posts_path
-  end
+  end  
 
   private
 
