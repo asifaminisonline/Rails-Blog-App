@@ -21,7 +21,7 @@ RSpec.describe Comment, type: :model do
   end
   describe '#update_comments_counter' do
     it 'should update the posts comments counter' do
-      first_user = User.create(name: 'Tom', photo: 'https://img.freepik.com/premium-photo/portrait-teenager-rebellious-man_58409-6711.jpg?w=740',
+      first_user = User.create(name: 'Tom', photo: 'https://img.freepik.com/premium-photo/'+'portrait-teenager-rebellious-man_58409-6711.jpg?w=740',
                                bio: 'Full-Stack Developer', posts_counter: 0)
       # rubocop:disable Lint/UselessAssignment
       first_post = Post.create(title: 'First Post', text: 'This is my first post', author: first_user,
