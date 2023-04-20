@@ -23,7 +23,7 @@ RSpec.describe Like, type: :model do
   end
   describe '#update_posts_like_counter' do
     it 'should update the posts like counter' do
-      first_user = User.create(name: 'Tom', photo: 'https://unsplash.com/photos/F_-0BxGuVvo',
+      first_user = User.create(name: 'Tom', photo: 'https://images.unsplash.com/photo-1583864697784-a0efc8379f70?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80',
                                bio: 'Teacher from Mexico.', posts_counter: 0)
       first_post = Post.create(author: first_user, title: 'Hello', text: 'This is my first post', comments_counter: 0,
                                likes_counter: 0)
