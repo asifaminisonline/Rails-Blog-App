@@ -1,15 +1,15 @@
-    <div class="users">
-        <% @users.each do |user| %>
-            <div class="user-container">
-                <img src=<%= user.photo %> alt="user photo">
-                
-                    <div class="name-and-counter">
-                        <a href="/users/<%= user.id %>" class="name-and-counter">
-                        <h1><%= user.name %></h1>
-                        <h3 id="post-counter">Number of posts: <%= user.posts_counter %></h3>
-                </a>
-                    </div>
+<main>
+<div class="users container">
+    <h1>Users</h1>
+    <% @users.each do |user| %>
+        <div class="user">
+            <img src=<%= user.photo %> alt="User Photo" class="user-photo">
+            <div class="user-detail">
+                <h2 class="user-name"><a href="/users/<%= user.id %>"><%= user.name%></a></h2>
+                <h4 class="post-count">Number of posts: <%= user.posts_counter %> </h4>
             </div>
-        <% end %>
-    </div>
 
+        </div>
+    <% end %>
+</div>
+</main>
