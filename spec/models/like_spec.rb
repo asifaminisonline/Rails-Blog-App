@@ -1,29 +1,24 @@
 require 'rails_helper'
-
 RSpec.describe Like, type: :model do
-  it 'increments likes_counter' do
-    user = User.new(
-      name: 'John Doe',
-      bio: 'Developer',
-      posts_counter: 5
-    )
-    user.save
+  describe 'associations' do
+    author = User.create(name: 'author', photo: 'photo', bio: 'bio', posts_counter: 2)
+    post = Post.create(title: 'title', text: 'text', comments_counter: 2, author_id: author.id, likes_counter: 2)
+    subject { Like.new(author_id: 1, post_id: 1) }
 
-    post = Post.new(
-      title: 'My first post',
-      text: 'Hello world!',
-      comments_counter: 4,
-      likes_counter: 5,
-      author_id: user.id
-    )
-    post.save
+    before { subject.save }
 
-    like = Like.new(
-      author_id: user.id,
-      post_id: post.id
-    )
-    like.save
+    it 'author id should be an integer' do
+      subject.author_id = 'string'
+      expect(subject).to_not be_valid
+    end
 
-    expect(post.likes_counter).to_not eq(6)
+    it 'post id should be an integer' do
+      subject.post_id = 'string'
+      expect(subject).to_not be_valid
+    end
+
+    it 'updates the likes counter' do
+      expect(post.likes_counter).to eq(2)
+    end
   end
 end

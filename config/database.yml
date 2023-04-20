@@ -18,24 +18,23 @@ default: &default
   adapter: postgresql
   encoding: unicode
   username: dev
-  password: root
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
-  database: rails_blog_device_development
-  username: dev
-  password: root
+  database: Project_developments
+  username: "dev"
+  password: "root"
 
-  # The specified database role being used to connect to postgres.
-  # To create additional roles in postgres see `$ createuser --help`.
-  # When left blank, postgres will use the default role. This is
+  # The specified database role being used to connect to dev.
+  # To create additional roles in dev see `$ createuser --help`.
+  # When left blank, dev will use the default role. This is
   # the same name as the operating system user running Rails.
-  #username: rails_blog
+  #username: Project
 
-  # The password associated with the postgres role (username).
+  # The password associated with the dev role (username).
   #password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -61,7 +60,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: rails_blog_device_test
+  database: Project_tests
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -70,7 +69,7 @@ test:
 # Instead, provide the password or a full connection URL as an environment
 # variable when you boot the app. For example:
 #
-#   DATABASE_URL="postgres://myuser:mypass@localhost/somedatabase"
+#   DATABASE_URL="dev://myuser:mypass@localhost/somedatabase"
 #
 # If the connection URL is provided in the special DATABASE_URL environment
 # variable, Rails will automatically merge its configuration values on top of
@@ -85,6 +84,12 @@ test:
 #
 production:
   <<: *default
-  database: rails_blog_device_production
-  username: dev
-  password: <%= ENV["RAILS_BLOG_DATABASE_PASSWORD"] %>
+  database: Project_productions
+  username: Project
+  password: <%= ENV["PROJECT_DATABASE_PASSWORD"] %>
+test:
+  <<: *default
+  database: test_blog_apps
+  host: 127.0.0.1
+  username: 'dev'
+  password: 'root'
