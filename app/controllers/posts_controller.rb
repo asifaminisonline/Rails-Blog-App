@@ -37,7 +37,7 @@ class PostsController < ApplicationController
       flash[:error] = 'You are not authorized to delete this post.'
     end
     redirect_to user_posts_path
-  end  
+  end
 
   private
 
