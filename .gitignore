@@ -6,7 +6,7 @@
 
 # Ignore bundler config.
 /.bundle
-node_modules/
+
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
@@ -29,8 +29,4 @@ node_modules/
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
-
-# Ignore .env file containing credentials.
-.env
-
-.vscode
+node_modules

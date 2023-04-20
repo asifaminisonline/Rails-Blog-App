@@ -1,38 +1,38 @@
-<section class="post-page">
-    <div class='title-and-info'>
-        <h1 id="post-title">
-            <%= @post.title%> by <%= @post.author.name%>
-        </h1>
-        <div class="comment-like-for-post">
-            <span>Comments: <%= @post.comments_counter%>, </span>
-            <span class="likes">Likes:<%= @post.likes_counter%></span>
-        </div>
-    </div>
-    <p>
-        <%= @post.text %>
-    </p>
-<div class="like-comment-buttons">
-  <%= form_with model: @like, url: user_post_likes_path(1, @post), scope: :like do |form|%>
-     <%= form.submit 'Like post', class: 'like-button' %>
-  <% end %>
-  <button type="button" class="comment-button"><%= link_to "Comment", new_user_post_comment_path( post_id: @post.id), { class: "user-link" } %></button>
-</div>
+<h1>Show a particular post</h1>
 
-    <hr id="post-page-hr">
-
-    <div class="comments-container-post">
-        <% @comments=Post.find(@post.id).comments %>
-            <% @comments.each do |comment| %>
-                <div id="single-comment">
-                    <span>
-                        <%= comment.user.name %> : <%= comment.text %>
-                    </span>
+<div class= "user-details gap" >
+            <div class="post">
+                <div>
+                    <h4> Post #<%= @post.id %> <%= @post.title %> by <%= @user.name %> </h4>
+                    <%= @post.text%>
+                    <h6>Comments:<%= @post.comments_counter %>, Likes:<%= @post.likes_counter %> </h6>
                 </div>
-                <% end %>
-    </div>
 
-    <% if @post.comments_counter !=0 %>
-        <hr id="half">
-        <% end %>
+                <div>
+                    <%= form_with model: @like, url:  user_post_likes_path(@user, @post) do |form|%>
+                        <%= form.submit 'Like post', class: 'submit' %>
+                    <%end%>
+                    <% if can? :manage, @post %>
+                         <%= button_to "Delete Post", user_post_path, method: :delete, class: "btn btn-outline-secondary" %>
+                    <% end %>
+                </div>
 
-</section>
+                <div class="post-comments">
+                    <h4> Comments </h4>
+                    <% @post.comments.each do |comment| %>
+                        <p>
+                            <strong><%= comment.author.name %>:</strong>
+                            <span><%= comment.text %></span>
+                        </p>
+                        <% if can? :manage, comment %>
+                          <%= button_to "Delete Comment", user_post_comment_path(@user, @post, comment), method: :delete, class: "btn btn-outline-secondary" %>
+                        <% end %>
+                    <%end%>
+                </div>
+            </div>  
+
+            <button class="see-all-post d-flex border">
+                <%= link_to "Create new comment", new_user_post_comment_path(@user, @post) %>
+            </button>
+
+</div>
