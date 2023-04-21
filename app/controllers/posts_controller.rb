@@ -1,13 +1,15 @@
 class PostsController < ApplicationController
+  load_and_authorize_resource
+
   def index
-    @posts = Post.where(author_id: params[:user_id])
     @user = User.find(params[:user_id])
+    @posts = Post.includes(:likes, :comments)
   end
 
   def show
-    @post = Post.find(params[:id])
-    @comments = @post.comments
-    @like = Like.new
+    @user = User.find(params[:user_id])
+    @post = Post.includes(:likes, :comments).find(params[:id])
+    @likes = @post.likes
   end
 
   def new
@@ -16,10 +18,30 @@ class PostsController < ApplicationController
   end
 
   def create
-    @user = current_user
-    @post = Post.new(author_id: @user, title: params[:post][:title], text: params[:post][:text])
-    @post.author_id = @user.id
-    @post.save
-    redirect_to user_posts_path(@user)
+    @post = Post.new(post_params)
+    @post.author = current_user
+    @post.likes_counter = 0
+    @post.comments_counter = 0
+    return unless @post.save
+
+    redirect_to user_posts_path
+    flash[:success] = 'Post created!'
+  end
+
+  def destroy
+    @post = Post.find(params[:id])
+    if current_user.admin? || current_user == @post.user
+      @post.destroy
+      flash[:success] = 'Post deleted!'
+    else
+      flash[:error] = 'You are not authorized to delete this post.'
+    end
+    redirect_to user_posts_path
+  end
+
+  private
+
+  def post_params
+    params.require(:post).permit(:title, :text)
   end
 end

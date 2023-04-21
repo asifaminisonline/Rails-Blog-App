@@ -116,6 +116,12 @@ To run tests, run the following command accordingly:
 - Twitter: [@Asif Amin](https://twitter.com/AminAmi53306702)
 - LinkedIn: [@Asif Amin](https://www.linkedin.com/in/asifaminisonline/)
 
+👤 Peter Ugwu
+
+- GitHub: [@PeteUgwu](https://github.com/PeteUgwu)
+- Twitter: [@Petrus4Charles](https://twitter.com/Petrus4Charles)
+- LinkedIn: [@peteugwu](https://www.linkedin.com/in/peteugwu/)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- FUTURE FEATURES -->
@@ -157,6 +163,6 @@ I would like to thank microverse for their resources.
 
 ## 📝 License <a name="license"></a>
 
-This project is [MIT](https://github.com/asifaminisonline/Rails-Blog-App/blob/form/LICENSE) licensed.
+This project is [MIT](https://github.com/asifaminisonline/Rails-Blog-App/blob/Authorization/LICENSE) licensed .
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
